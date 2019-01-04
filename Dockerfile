@@ -23,3 +23,7 @@ WORKDIR /home/$USERNAME
 RUN if getent group $DOCKERID; then addgroup $USERNAME $(getent group $DOCKERID | cut -d: -f1); else addgroup -g $DOCKERID docker && addgroup $USERNAME docker; fi
 
 USER $USERNAME
+
+COPY config/zsh /home/$USERNAME
+
+CMD ["zsh"]
