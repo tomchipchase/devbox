@@ -8,6 +8,6 @@ build: Dockerfile
 	docker build . -t dev --build-arg USERNAME=${user} --build-arg USERID=${userid} --build-arg DOCKERID=${dockerid}
 
 run:
-	docker run -v ~/src:/development -v /var/run/docker.sock:/var/run/docker.sock --hostname devbox -it dev
+	docker run -v ~/src:/home/$(user)/src -v /var/run/docker.sock:/var/run/docker.sock --hostname devbox -it dev
 
 default: build
