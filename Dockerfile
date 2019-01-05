@@ -22,8 +22,18 @@ WORKDIR /home/$USERNAME
 # that
 RUN if getent group $DOCKERID; then addgroup $USERNAME $(getent group $DOCKERID | cut -d: -f1); else addgroup -g $DOCKERID docker && addgroup $USERNAME docker; fi
 
+# Install configuration files
+RUN apk add --no-cache stow
+
+RUN apk add --no-cache vim git
+
 USER $USERNAME
 
-COPY config/zsh /home/$USERNAME
+RUN git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/vundle
+COPY config /home/$USERNAME/config
+RUN cd config && stow *
+
+# Configure vim
+RUN vim +PluginInstall +qall
 
 CMD ["zsh"]

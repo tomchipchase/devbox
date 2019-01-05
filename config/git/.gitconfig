@@ -1,0 +1,25 @@
+[user]
+  name = Tom Chipchase
+  email = tom.chipchase@farmdrop.co.uk
+[alias]
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+  d = difftool
+  amend = commit --amend
+  pb = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
+  branches = branch -l
+  uncommit = reset HEAD~
+  ir = rebase -i
+  rb = !sh -c 'git branch -d $1 && git push origin :$1' -
+  rnotes = log --cherry-pick --oneline --merges --left-only next...master
+[diff]
+  tool = vimdiff
+	algorithm = patience
+[difftool]
+  prompt = false
+[merge "Gemfile.lock"]
+  name = relocks the gemfile.lock
+  driver = bundle install
+[push]
+  default = tracking
+[rebase]
+	autoSquash = true
