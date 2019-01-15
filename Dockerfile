@@ -5,11 +5,21 @@ ARG DOCKERID
 ARG USERNAME
 
 # Docker
-RUN apk add --no-cache docker
+RUN apk add --no-cache \
+  curl \
+  docker \
+  dvtm \
+  git \
+  git-perl \
+  openssh-client \
+  stow \
+  tig \
+  vim \
+  zsh
+
 # Docker Compose
-RUN apk add --no-cache python2 py-pip && pip install --upgrade docker-compose && apk del --no-cache py-pip
-# Shell
-RUN apk add --no-cache zsh
+RUN curl -L --fail https://github.com/docker/compose/releases/download/1.23.2/run.sh -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+
 # Setup a user
 RUN mkdir -p /home/$USERNAME
 
@@ -22,10 +32,6 @@ WORKDIR /home/$USERNAME
 # that
 RUN if getent group $DOCKERID; then addgroup $USERNAME $(getent group $DOCKERID | cut -d: -f1); else addgroup -g $DOCKERID docker && addgroup $USERNAME docker; fi
 
-# Install configuration files
-RUN apk add --no-cache stow
-
-RUN apk add --no-cache vim git
 
 USER $USERNAME
 
@@ -36,4 +42,4 @@ RUN cd config && stow *
 # Configure vim
 RUN vim +PluginInstall +qall
 
-CMD ["zsh"]
+CMD ["ssh-agent", "dvtm"]
