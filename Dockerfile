@@ -11,6 +11,7 @@ RUN apk add --no-cache \
   dvtm \
   git \
   git-perl \
+  make \
   openssh-client \
   stow \
   tig \
