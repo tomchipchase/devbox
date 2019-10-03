@@ -36,4 +36,4 @@ prompt walters
 
 bindkey '^R' history-incremental-search-backward
 
-# source <(kubectl completion zsh)
+source /usr/local/share/chruby/chruby.sh

@@ -6,20 +6,35 @@ ARG USERNAME
 
 # Docker
 RUN apk add --no-cache \
+  bash \
+  build-base \
   curl \
   docker \
   dvtm \
+  gcc \
   git \
   git-perl \
+  less \
+  linux-headers \
   make \
+  man \
+  mysql-client \
   openssh-client \
+  openssl-dev \
   stow \
   tig \
   vim \
+  zlib-dev \
   zsh
 
 # Docker Compose
-RUN curl -L --fail https://github.com/docker/compose/releases/download/1.23.2/run.sh -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+RUN curl -L --fail https://github.com/docker/compose/releases/download/1.24.1/run.sh -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+
+# Ruby install
+RUN curl -L --fail https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz -o /ruby-install-0.7.0.tar.gz && tar -xf ruby-install-0.7.0.tar.gz && cd /ruby-install-0.7.0 && make install && cd - && rm -r /ruby-install-0.7.0
+
+# Chruby
+RUN curl -L --fail https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz -o chruby-0.3.9.tar.gz && tar -xf /chruby-0.3.9.tar.gz && cd /chruby-0.3.9 && make install && cd - && rm -r /chruby-0.3.9
 
 # Setup a user
 RUN mkdir -p /home/$USERNAME
@@ -33,7 +48,6 @@ WORKDIR /home/$USERNAME
 # that
 RUN if getent group $DOCKERID; then addgroup $USERNAME $(getent group $DOCKERID | cut -d: -f1); else addgroup -g $DOCKERID docker && addgroup $USERNAME docker; fi
 
-
 USER $USERNAME
 
 RUN git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/vundle
@@ -43,4 +57,4 @@ RUN cd config && stow *
 # Configure vim
 RUN vim +PluginInstall +qall
 
-CMD ["ssh-agent", "dvtm"]
+CMD ["dvtm"]

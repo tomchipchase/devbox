@@ -3,17 +3,23 @@
   email = tom.chipchase@farmdrop.co.uk
 [alias]
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-  d = difftool
   amend = commit --amend
   pb = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
   branches = branch -l
   uncommit = reset HEAD~
-  ir = rebase -i
-  rb = !sh -c 'git branch -d $1 && git push origin :$1' -
-  rnotes = log --cherry-pick --oneline --merges --left-only next...master
+  delete = !sh -c 'git branch -d $1 && git push origin :$1' -
+  tags = tag -l
+  showtag = "!f() { git tags | grep ${2:-production}- | sort | tail -${1:-1} | head -1; }; f"
+  commits = "!f() { git log --oneline --format="%s (%an)" $1...$2; }; f"
+  changes = "!f() { git log --oneline --no-merges --format="%s (%an)%n%b" $1...$2; }; f"
+  notreleased = !git commits $(git showtag) origin/master
+  notstaging = !git commits $(git showtag 1 staging) origin/master
+  lastrelease = !git merges $(git showtag 2) $(git showtag 1)
+  notreleased = !git commits $(git showtag) origin/master
+  release = "!f() { git tag ${1:-production}-$(date -u +%Y%m%d%H%M); }; f"
 [diff]
   tool = vimdiff
-	algorithm = patience
+  algorithm = patience
 [difftool]
   prompt = false
 [merge "Gemfile.lock"]
@@ -22,4 +28,6 @@
 [push]
   default = tracking
 [rebase]
-	autoSquash = true
+  autoSquash = true
+[transfer]
+  fsckObjects = false
