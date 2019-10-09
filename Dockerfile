@@ -21,6 +21,7 @@ RUN apk add --no-cache \
   mysql-client \
   openssh-client \
   openssl-dev \
+  sed \
   stow \
   tig \
   vim \
@@ -35,6 +36,12 @@ RUN curl -L --fail https://github.com/postmodern/ruby-install/archive/v0.7.0.tar
 
 # Chruby
 RUN curl -L --fail https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz -o chruby-0.3.9.tar.gz && tar -xf /chruby-0.3.9.tar.gz && cd /chruby-0.3.9 && make install && cd - && rm -r /chruby-0.3.9
+
+# Kubectl
+RUN curl -L https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl
+
+# Stern
+RUN curl -L https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64 -o /usr/local/bin/stern && chmod +x /usr/local/bin/stern
 
 # Setup a user
 RUN mkdir -p /home/$USERNAME
