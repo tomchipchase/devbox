@@ -1,0 +1,1 @@
+set blameOptions = -C -C -C -M -w
