@@ -54,7 +54,7 @@ WORKDIR /home/$USERNAME
 # If there is a clash with an existing group, add the user to that group,
 # otherwise create a new docker group with the correct id and add the user to
 # that
-RUN if getent group $DOCKERID; then addgroup $USERNAME $(getent group $DOCKERID | cut -d: -f1); else addgroup -g $DOCKERID docker && addgroup $USERNAME docker; fi
+RUN if getent group $DOCKERID; then addgroup $USERNAME $(getent group $DOCKERID | cut -d: -f1); else addgroup -g $DOCKERID parent_docker && addgroup $USERNAME parent_docker; fi
 
 USER $USERNAME
 
