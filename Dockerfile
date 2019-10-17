@@ -11,6 +11,7 @@ RUN apk add --no-cache \
   curl \
   docker \
   dvtm \
+  jq \
   gcc \
   git \
   git-perl \
