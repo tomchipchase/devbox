@@ -3,9 +3,7 @@
   email = tom.chipchase@farmdrop.co.uk
 [alias]
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-  amend = commit --amend
   pb = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
-  branches = branch -l
   uncommit = reset HEAD~
   delete = !sh -c 'git branch -d $1 && git push origin :$1' -
   tags = tag -l
@@ -17,6 +15,8 @@
   lastrelease = !git merges $(git showtag 2) $(git showtag 1)
   notreleased = !git commits $(git showtag) origin/master
   release = "!f() { git tag ${1:-production}-$(date -u +%Y%m%d%H%M); }; f"
+  save = !sh -c 'export PREV=$(git symbolic-ref HEAD|cut -d/ -f3-) && git checkout -b "$1" && git commit -am "$1" && git checkout "$PREV"' -
+  wip = -am "WIP"
 [diff]
   tool = vimdiff
   algorithm = patience
