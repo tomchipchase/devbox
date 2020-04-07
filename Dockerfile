@@ -31,8 +31,11 @@ ARG DOCKERID
 ARG USERNAME
 
 RUN apk add --no-cache \
+  automake \
+  autoconf \ 
   bash \
   build-base \
+  crystal \
   docker \
   dvtm \
   jq \
@@ -40,6 +43,8 @@ RUN apk add --no-cache \
   git \
   git-perl \
   less \
+  libexecinfo \
+  libtool \
   linux-headers \
   make \
   man \
@@ -47,6 +52,8 @@ RUN apk add --no-cache \
   openssh-client \
   openssl-dev \
   sed \
+  shards \
+  snappy \
   stow \
   tig \
   zlib-dev \
@@ -73,6 +80,8 @@ USER $USERNAME
 COPY config /home/$USERNAME/config
 RUN cd config && stow *
 
-COPY --from=vim-plugins --chown=$USERNAME:$DOCKERID /root/.vim /home/$USERNAME/.vim
+COPY --from=vim-plugins --chown=$USERNAME:nogroup /root/.vim /home/$USERNAME/.vim
+
+EXPOSE 8080
 
 CMD ["dvtm"]
