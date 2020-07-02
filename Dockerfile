@@ -84,4 +84,4 @@ COPY --from=vim-plugins --chown=$USERNAME:nogroup /root/.vim /home/$USERNAME/.vi
 
 EXPOSE 8080
 
-CMD ["dvtm"]
+CMD ["dvtm", "-M"]
