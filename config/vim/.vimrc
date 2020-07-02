@@ -1,6 +1,3 @@
-" autocmd BufRead *.rb set syntax=yard
-" autocmd BufRead *.pp set ft=puppet
-
 " use syntax highlighting
 syntax on
 
@@ -22,6 +19,9 @@ set hidden
 set number
 " show relative numbers
 set relativenumber
+" Don't show line numbers in terminal
+autocmd TerminalOpen * setlocal norelativenumber
+autocmd TerminalOpen * setlocal nonu
 
 let mapleader=" "
 
@@ -39,35 +39,11 @@ autocmd WinLeave * setlocal nocursorline
 
 map <leader>s :split<cr>
 map <leader>v :vsplit<cr>
-
-" Shortcut for picking a window
-" next
-map <leader>n <C-W>w
-" previous
-map <leader>p <C-W>W
-" directional
-map <leader>j <C-W>j
-map <leader>k <C-W>k
-map <leader>h <C-W>h
-map <leader>l <C-W>l
-
-" shortcut to close other panes
-map <leader>f :only<cr>
-" redraw the screen
-map <leader>r :redraw<cr>
+map <leader>f <C-W>f<C-W>L
 
 " shortcut for directory listing
 map <leader>e :Explore<cr>
 let g:netrw_liststyles=3
-
-"shortcut for buffer select
-map <leader>b :buffers<cr>:buf<space>
-
-" shortcut for redo
-map <leader>r <C-r>
-
-" shortcut to save
-map <leader>w :w<cr>
 
 " show tabs and trailing spaces
 set lcs=tab:»·,trail:·
@@ -105,49 +81,21 @@ Bundle 'altercation/vim-colors-solarized'
 " colorscheme solarized
 " colorscheme slate
 
-Bundle 'scrooloose/syntastic'
-let g:syntastic_ruby_checkers = ['reek', 'rubocop', 'mri']
-let g:syntastic_quiet_messagesu = {'level': 'warnings'}
-let g:syntastic_javascript_checkers = ['jsxhint']
-let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
-
-Bundle 'rainerborene/vim-reek'
-Bundle 'ngmy/vim-rubocop'
-Bundle 'tomtom/quickfixsigns_vim'
-
-" puppet file highlighting
-Bundle 'rodjek/vim-puppet'
-
-" use my fork of vim-slime so I can use dtach instead of tmux or screen
-" requires patched dtach
-" Bundle 'tomchipchase/dtach'
-let g:slime_target = "tmux"
-
 Bundle 'https://github.com/ervandew/supertab.git'
-
-filetype off
-set nocompatible
-Bundle 'kchmck/vim-coffee-script'
-syntax enable
-filetype plugin indent on
-
-" Bundle 'kien/ctrlp'
-Bundle 'thoughtbot/vim-rspec'
-map <leader>t :call RunCurrentSpecFile()<CR>
-map <leader>n :call RunNearestSpec()<CR>
-map <leader>l :call RunLastSpec()<CR>
-map <leader>a :call RunAllSpecs()<CR>
 
 Bundle 'elixir-lang/vim-elixir'
 autocmd BufRead *.ex set filetype=elixir
 autocmd BufRead *.exs set filetype=elixir
 
-Bundle 'pangloss/vim-javascript'
-Bundle 'mxw/vim-jsx'
-
-Bundle 'vim-ruby/vim-ruby'
-
-vmap <C-c><C-c> J:SlimeSend<CR>u
-
 set foldmethod=syntax
 set foldlevel=1
+
+Bundle 'habamax/vim-sendtoterm'
+
+" automatically word wrap long lines
+set linebreak
+set breakindent
+set breakindentopt=shift:4
+let &showbreak='↳ '
+set breakat==\|(){}[],\ 
+
