@@ -37,9 +37,10 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
 
-map <leader>s :split<cr>
+map <leader>h :split<cr>
 map <leader>v :vsplit<cr>
-map <leader>f <C-W>f<C-W>L
+map <leader>vf :vertical wincmd f<CR>
+map <leader>hf wincmd f<CR>
 
 " shortcut for directory listing
 map <leader>e :Explore<cr>
@@ -98,4 +99,7 @@ set breakindent
 set breakindentopt=shift:4
 let &showbreak='↳ '
 set breakat==\|(){}[],\ 
+
+map <leader>vt :vertical terminal zsh<CR>
+map <leader>ht :terminal zsh<CR>
 

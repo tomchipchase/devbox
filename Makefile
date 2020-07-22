@@ -3,6 +3,7 @@
 user := $(shell whoami)
 userid := $(shell id -u)
 dockerid := $(shell getent group docker | cut -d: -f3)
+remotehost := ssh://dev.tomchipchase.co.uk
 
 build: Dockerfile
 	docker build . -t dev --build-arg USERNAME=${user} --build-arg USERID=${userid} --build-arg DOCKERID=${dockerid}

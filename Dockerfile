@@ -20,7 +20,7 @@ FROM base as stern
 RUN curl -L https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64 -o /usr/local/bin/stern && chmod +x /usr/local/bin/stern
 
 FROM base AS vim-plugins
-RUN apk add --no-cache git vim
+RUN apk add --no-cache git
 RUN git clone https://github.com/VundleVim/Vundle.vim.git /root/.vim/bundle/vundle
 COPY config/vim/.vimrc /root/.vimrc
 RUN vim +PluginInstall +qall
